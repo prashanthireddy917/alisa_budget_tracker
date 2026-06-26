@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Alisa’s Budget Tracker</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#d85f84">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Alisa Budget">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+</head>
+
+
+  <body>
+  <div class="app">
+
+    <header>
+      <p class="small-title">Private Budget App</p>
+      <h1>Alisa’s Budget Tracker</h1>
+      <p>Track income, expenses, hours worked, and monthly balance.</p>
+      <label class="month-filter">
+  Select Month
+  <input type="month" id="selectedMonth">
+</label>
+    </header>
+<!--Dashboard Section -->
+    <section class="dashboard">
+      <div class="card">
+        <p>Total Income</p>
+        <h2 id="totalIncome">$0.00</h2>
+      </div>
+
+      <div class="card">
+        <p>Total Expenses</p>
+        <h2 id="totalExpenses">$0.00</h2>
+      </div>
+
+      <div class="card">
+        <p>Remaining Balance</p>
+        <h2 id="remainingBalance">$0.00</h2>
+      </div>
+
+      <div class="card">
+        <p>Hours Worked</p>
+        <h2 id="totalHours">0</h2>
+      </div>
+    </section>
+    <!-- Navigation -->
+  <nav class="app-nav">
+  <button type="button" class="nav-button active" data-section="incomeSection">Income</button>
+  <button type="button" class="nav-button" data-section="expenseSection">Expense</button>
+  <button type="button" class="nav-button" data-section="paymentsSection">Payments</button>
+  <button type="button" class="nav-button" data-section="historySection">History</button>
+  <button type="button" class="nav-button" data-section="analysisSection">Analysis</button>
+  <button type="button" class="nav-button" data-section="backupSection">Backup</button>
+</nav>
+
+<!-- Income section -->
+<section class="form-section page-section active-section" id="incomeSection">
+  <h2>Add Daily Income</h2>
+  <p>Enter your work hours, hourly rate, tips, or extra income.</p>
+
+ <form class="income-form" id="incomeForm">
+  <label>
+    Date
+    <input type="date" id="incomeDate">
+  </label>
+
+  <label>
+    Work Type
+    <input type="text" id="workType" placeholder="Example: Part-time job">
+  </label>
+
+  <label>
+    Hours Worked
+    <input type="number" id="hoursWorked" placeholder="0">
+  </label>
+
+  <label>
+    Hourly Rate
+    <input type="number" id="hourlyRate" placeholder="0.00">
+  </label>
+
+  <label>
+    Tips
+    <input type="number" id="tips" placeholder="0.00">
+  </label>
+
+  <label>
+    Other Income
+    <input type="number" id="otherIncome" placeholder="0.00">
+  </label>
+
+  <label class="full-width">
+    Note
+    <input type="text" id="incomeNote" placeholder="Optional note">
+  </label>
+
+  <button type="submit" class="save-button">Save Income</button>
+</form>
+</section>
+
+<!-- Expense section -->
+<section class="form-section page-section" id="expenseSection">
+  <h2>Add Expense</h2>
+  <p>Enter rent, WiFi, power, groceries, subscriptions, shopping, books, or other spending.</p>
+
+  <form class="expense-form" id="expenseForm">
+    <label>
+      Date
+      <input type="date" id="expenseDate">
+    </label>
+
+    <label>
+      Category
+      <select id="expenseCategory">
+        <option value="Groceries">Groceries</option>
+        <option value="Rent">Rent</option>
+        <option value="Power">Power</option>
+        <option value="WiFi">WiFi</option>
+        <option value="Phone">Phone</option>
+        <option value="Subscriptions">Subscriptions</option>
+        <option value="Eating Out">Eating Out</option>
+        <option value="Books">Books</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Transport">Transport</option>
+        <option value="Health">Health</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+
+    <label>
+      Amount Spent
+      <input type="number" id="expenseAmount" placeholder="0.00">
+    </label>
+
+    <label>
+      Payment Method
+      <select id="paymentMethod">
+        <option value="Card">Card</option>
+        <option value="Cash">Cash</option>
+        <option value="Apple Pay">Apple Pay</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+
+    <label class="full-width">
+      Note
+      <input type="text" id="expenseNote" placeholder="Example: Walmart groceries">
+    </label>
+
+    <button type="submit" class="save-button">Save Expense</button>
+  </form>
+</section>
+
+<!-- Monthly payments section -->
+<section class="form-section page-section" id="paymentsSection">
+  <h2>Monthly Payments</h2>
+  <p>Add only the payments you want for this month. Nothing is fixed unless you save it.</p>
+<div class="payment-summary">
+  <div class="payment-summary-card">
+    <p>Total Payments</p>
+    <h3 id="totalPayments">$0.00</h3>
+  </div>
+
+  <div class="payment-summary-card">
+    <p>Paid</p>
+    <h3 id="paidPayments">$0.00</h3>
+  </div>
+
+  <div class="payment-summary-card">
+    <p>Unpaid</p>
+    <h3 id="unpaidPayments">$0.00</h3>
+  </div>
+</div>
+
+<!-- Reminder Box -->
+<div class="reminder-box">
+  <h3>Upcoming Reminders</h3>
+
+  <div id="reminderList">
+    <p>No upcoming payment reminders.</p>
+  </div>
+
+  <button type="button" id="enableNotificationsButton" class="save-button">
+    Enable Notifications
+  </button>
+</div>
+
+ <!-- Recurring monthly payments -->
+<div class="recurring-box">
+  <h3>Recurring Monthly Payments</h3>
+  <p>Set payments that repeat every month until you stop them.</p>
+
+  <form class="payment-form" id="recurringForm">
+    <label>
+      Payment Name
+      <input type="text" id="recurringName" placeholder="Example: Rent, T-Mobile, Affirm 1">
+    </label>
+
+    <label>
+      Category
+      <select id="recurringCategory">
+        <option value="Rent">Rent</option>
+        <option value="Power">Power</option>
+        <option value="WiFi">WiFi</option>
+        <option value="Phone">Phone</option>
+        <option value="Verizon">Verizon</option>
+        <option value="T-Mobile">T-Mobile</option>
+        <option value="Groceries">Groceries</option>
+        <option value="Subscriptions">Subscriptions</option>
+
+        <option value="Affirm 1">Affirm 1</option>
+        <option value="Affirm 2">Affirm 2</option>
+        <option value="Affirm 3">Affirm 3</option>
+
+        <option value="Student Fee">Student Fee</option>
+
+        <option value="Zolve P">Zolve P</option>
+        <option value="Zolve M">Zolve M</option>
+
+        <option value="Discover P">Discover P</option>
+        <option value="Discover M">Discover M</option>
+
+        <option value="One Credit M">One Credit M</option>
+
+        <option value="Other Credit Card">Other Credit Card</option>
+        <option value="Other Expense">Other Expense</option>
+      </select>
+    </label>
+
+    <label>
+      Amount
+      <input type="number" id="recurringAmount" placeholder="0.00">
+    </label>
+
+    <label>
+      Due Day Every Month
+      <input type="number" id="recurringDueDay" placeholder="Example: 10" min="1" max="31">
+    </label>
+
+    <label class="full-width">
+      Note
+      <input type="text" id="recurringNote" placeholder="Optional note">
+    </label>
+
+    <button type="submit" class="save-button">
+      Save Recurring Payment
+    </button>
+  </form>
+
+  <h3>Active Recurring Payments</h3>
+
+  <div id="recurringList" class="history-list">
+    <p>No recurring payments yet.</p>
+  </div>
+</div>
+
+  <form class="payment-form" id="paymentForm">
+    <label>
+      Payment Month
+      <input type="month" id="paymentMonth">
+    </label>
+
+    <label>
+      Payment Name
+      <input type="text" id="paymentName" placeholder="Example: Affirm 1, Rent, Zolve P">
+    </label>
+
+    <label>
+      Category
+      <select id="paymentCategory">
+        <option value="Rent">Rent</option>
+        <option value="Power">Power</option>
+        <option value="WiFi">WiFi</option>
+        <option value="Phone">Phone</option>
+        <option value="Verizon">Verizon</option>
+        <option value="T-Mobile">T-Mobile</option>
+        <option value="Groceries">Groceries</option>
+        <option value="Subscriptions">Subscriptions</option>
+
+        <option value="Affirm 1">Affirm 1</option>
+        <option value="Affirm 2">Affirm 2</option>
+        <option value="Affirm 3">Affirm 3</option>
+
+        <option value="Student Fee">Student Fee</option>
+
+        <option value="Zolve P">Zolve P</option>
+        <option value="Zolve M">Zolve M</option>
+
+        <option value="Discover P">Discover P</option>
+        <option value="Discover M">Discover M</option>
+
+        <option value="One Credit M">One Credit M</option>
+
+        <option value="Other Credit Card">Other Credit Card</option>
+        <option value="Other Expense">Other Expense</option>
+      </select>
+    </label>
+
+    <label>
+      Amount
+      <input type="number" id="paymentAmount" placeholder="0.00">
+    </label>
+
+    <label>
+      Due Day
+      <input type="number" id="paymentDueDay" placeholder="Example: 1" min="1" max="31">
+    </label>
+
+    <label>
+      Status
+      <select id="paymentStatus">
+        <option value="Unpaid">Unpaid</option>
+        <option value="Paid">Paid</option>
+      </select>
+    </label>
+
+    <label class="full-width">
+      Note
+      <input type="text" id="paymentNote" placeholder="Optional note">
+    </label>
+
+    <button type="submit" class="save-button">Save Monthly Payment</button>
+  </form>
+</section>
+
+<!-- Transaction History Section -->
+<section class="form-section page-section" id="historySection">
+  <h2>Transaction History</h2>
+  <p>All your income and expense entries will show here.</p>
+
+  <div id="historyList" class="history-list">
+    <p>No transactions yet.</p>
+  </div>
+</section>
+
+<!-- Monthly Analysis Section -->
+<section class="form-section page-section" id="analysisSection">
+  <h2>Monthly Analysis</h2>
+  <p>Simple analysis for the selected month.</p>
+
+  <div class="analysis-grid">
+    <div class="analysis-card">
+      <p>Average Daily Spending</p>
+      <h3 id="averageDailySpending">$0.00</h3>
+    </div>
+
+    <div class="analysis-card">
+      <p>Average Hourly Income</p>
+      <h3 id="averageHourlyIncome">$0.00</h3>
+    </div>
+
+    <div class="analysis-card">
+      <p>Savings Rate</p>
+      <h3 id="savingsRate">0%</h3>
+    </div>
+
+    <div class="analysis-card">
+      <p>Highest Expense Category</p>
+      <h3 id="highestCategory">None</h3>
+    </div>
+  </div>
+  <h3>Expenses by Category</h3>
+
+<div id="categoryChart" class="category-chart">
+  <p>No expenses yet.</p>
+</div>
+</section>
+
+<!-- Backup & Restore Section -->
+<section class="form-section page-section" id="backupSection">
+  <h2>Backup & Restore</h2>
+  <p>Export your data as a backup file, or import it later if needed.</p>
+
+  <div class="backup-buttons">
+    <button id="exportButton" class="save-button">Export Backup</button>
+
+    <label class="import-button">
+      Import Backup
+      <input type="file" id="importFile" accept=".json">
+    </label>
+
+    <button id="clearButton" class="clear-button">Clear All Data</button>
+  </div>
+</section>
+  </div>
+
+  <div id="appMessage" class="app-message"></div>
+
+  <!-- Custom confirmation popup -->
+<div id="confirmPopup" class="confirm-overlay">
+  <div class="confirm-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmMessage">Do you want to continue?</p>
+
+    <div class="confirm-buttons">
+      <button type="button" id="confirmCancelButton" class="cancel-button">
+        Cancel
+      </button>
+
+      <button type="button" id="confirmYesButton" class="confirm-button">
+        Yes
+      </button>
+    </div>
+  </div>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>

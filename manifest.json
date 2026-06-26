@@ -1,0 +1,15 @@
+{
+  "name": "Alisa's Budget Tracker",
+  "short_name": "Alisa Budget",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff7f4",
+  "theme_color": "#d85f84",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
